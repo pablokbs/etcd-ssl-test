@@ -1,0 +1,22 @@
+{
+    "CN": "example.net",
+    "hosts": [
+        "example.net",
+        "www.example.net",
+        "*.local.etcd_main",
+        "*.ec2.internal"
+
+    ],
+    "key": {
+        "algo": "ecdsa",
+        "size": 256
+    },
+    "names": [
+        {
+            "C": "US",
+            "ST": "CA",
+            "L": "San Francisco"
+        }
+    ]
+}
+

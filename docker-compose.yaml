@@ -1,0 +1,94 @@
+version: "3"
+services:
+
+  etcd1:
+    image: quay.io/coreos/etcd:v3.3.10
+    hostname: etcd1.local
+    container_name: etcd1.local
+    environment:
+      - ETCD_NAME=etcd1.local.etcd_main
+      - ETCD_ADVERTISE_CLIENT_URLS=https://172.30.0.11:4001
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,https://0.0.0.0:4001
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380,https://0.0.0.0:7001
+      - ETCD_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/ca.pem
+      - ETCD_KEY_FILE=/etc/ssl/certs/etcd/etcd-key.pem
+      - ETCD_CERT_FILE=/etc/ssl/certs/etcd/etcd.pem
+      - ETCD_CLIENT_CERT_AUTH=true
+      - ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/etcd.pem
+      - ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/etcd-key.pem
+      - ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/ca.pem
+      - ETCD_PEER_CLIENT_CERT_AUTH=true
+      - ETCD_INITIAL_CLUSTER_TOKEN=etcd-local
+      - ETCD_INITIAL_CLUSTER=etcd1.local.etcd_main=https://etcd1.local.etcd_main:7001,etcd2.local.etcd_main=https://etcd2.local.etcd_main:7001,etcd3.local.etcd_main=https://etcd3.local.etcd_main:7001
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=https://etcd1.local.etcd_main:7001
+      - ETCD_DEBUG=true
+    volumes:
+      - ./:/etc/ssl/certs/etcd/:ro
+    networks:
+      main:
+        ipv4_address: 172.30.0.11
+        aliases: 
+          - etcd1.local
+
+  etcd2:
+    image: quay.io/coreos/etcd:v3.3.10
+    hostname: etcd2.local
+    container_name: etcd2.local
+    environment:
+      - ETCD_NAME=etcd2.local.etcd_main
+      - ETCD_ADVERTISE_CLIENT_URLS=https://172.30.0.12:4001
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,https://0.0.0.0:4001
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380,https://0.0.0.0:7001
+      - ETCD_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/ca.pem
+      - ETCD_KEY_FILE=/etc/ssl/certs/etcd/etcd-key.pem
+      - ETCD_CERT_FILE=/etc/ssl/certs/etcd/etcd.pem
+      - ETCD_CLIENT_CERT_AUTH=true
+      - ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/etcd.pem
+      - ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/etcd-key.pem
+      - ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/ca.pem
+      - ETCD_PEER_CLIENT_CERT_AUTH=true
+      - ETCD_INITIAL_CLUSTER_TOKEN=etcd-local
+      - ETCD_INITIAL_CLUSTER=etcd1.local.etcd_main=https://etcd1.local.etcd_main:7001,etcd2.local.etcd_main=https://etcd2.local.etcd_main:7001,etcd3.local.etcd_main=https://etcd3.local.etcd_main:7001
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=https://etcd2.local.etcd_main:7001
+    volumes:
+      - ./:/etc/ssl/certs/etcd/:ro
+    networks:
+      main:
+        ipv4_address: 172.30.0.12
+        aliases:
+          - etcd2.local
+
+  etcd3:
+    image: quay.io/coreos/etcd:v3.3.10
+    hostname: etcd3.local
+    container_name: etcd3.local
+    environment:
+      - ETCD_NAME=etcd3.local.etcd_main
+      - ETCD_ADVERTISE_CLIENT_URLS=https://172.30.0.13:4001
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,https://0.0.0.0:4001
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380,https://0.0.0.0:7001
+      - ETCD_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/ca.pem
+      - ETCD_KEY_FILE=/etc/ssl/certs/etcd/etcd-key.pem
+      - ETCD_CERT_FILE=/etc/ssl/certs/etcd/etcd.pem
+      - ETCD_CLIENT_CERT_AUTH=true
+      - ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/etcd.pem
+      - ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/etcd-key.pem
+      - ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/ca.pem
+      - ETCD_PEER_CLIENT_CERT_AUTH=true
+      - ETCD_INITIAL_CLUSTER_TOKEN=etcd-local
+      - ETCD_INITIAL_CLUSTER=etcd1.local.etcd_main=https://etcd1.local.etcd_main:7001,etcd2.local.etcd_main=https://etcd2.local.etcd_main:7001,etcd3.local.etcd_main=https://etcd3.local.etcd_main:7001
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=https://etcd3.local.etcd_main:7001
+    volumes:
+      - ./:/etc/ssl/certs/etcd/:ro
+    networks:
+      main:
+        ipv4_address: 172.30.0.13
+        aliases:
+          - etcd3.local
+
+networks:
+  main:
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+  
